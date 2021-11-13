@@ -1,17 +1,13 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
-#include <thread>
 #include <vector>
+#include <chrono>
 #include "imageActions.hpp"
 
 int main(int argc, char** argv)
 {
     try {
         imageActions actions(IMAGE_PATH_IN);
-
-        auto XActionLoop = [&actions]() {
-            while(actions.XAction()){}
-        };
 
         int numOfThreads = 1;
 
@@ -22,15 +18,14 @@ int main(int argc, char** argv)
             }
         }
 
-        std::vector<std::thread> threadVec;
-        for(int i = 0 ; i < numOfThreads ; ++i) {
-            std::thread trd(XActionLoop);
-            threadVec.push_back(std::move(trd));
-        }
+        std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
 
-        for(int i = 0 ; i < threadVec.size() ; ++i) {
-            threadVec[i].join();
-        }
+        actions.XActionLoop(numOfThreads);
+
+        std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+        std::chrono::milliseconds time_span = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+        std::cout << "Operation took: " << time_span.count() << " milliseconds" << std::endl;
+
     } catch(std::filesystem::filesystem_error& err) {
         std::cout << "caught " << err.what() << std::endl;
         return -1;

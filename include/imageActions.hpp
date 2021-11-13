@@ -24,6 +24,8 @@ public:
 
     bool XAction();
 
+    void XActionLoop(int numOfthreads);
+
 private:
     std::mutex                                    mPathLock;
     std::filesystem::recursive_directory_iterator mDirItr;

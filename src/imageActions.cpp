@@ -1,5 +1,6 @@
 #include "imageActions.hpp"
 #include <opencv2/opencv.hpp>
+#include <thread>
 
 constexpr double R = 0.299;
 constexpr double G = 0.587;
@@ -67,4 +68,21 @@ bool imageActions::XAction(){
         return false;
     }
     return true;
+}
+
+void imageActions::XActionLoop(int numOfThreads) {
+    auto XActionLoop = [this]() {
+        while(XAction()){}
+    };
+
+    std::vector<std::thread> threadVec;
+
+    for(int i = 0 ; i < numOfThreads ; ++i) {
+        std::thread trd(XActionLoop);
+        threadVec.push_back(std::move(trd));
+    }
+
+    for(int i = 0 ; i < threadVec.size() ; ++i) {
+        threadVec[i].join();
+    }
 }
