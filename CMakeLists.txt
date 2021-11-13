@@ -27,4 +27,4 @@ add_executable(PythonConversion mainPythonConversion.cpp
         src/imageActions.cpp
         )
 
-target_link_libraries(PythonConversion ${OpenCV_LIBS}  -lstdc++fs)
+target_link_libraries(PythonConversion ${OpenCV_LIBS}  -lstdc++fs pthread)
