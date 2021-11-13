@@ -1,6 +1,10 @@
 # build dirs
 .idea/
 build/
+cmake-build-debug/
+
+# run products
+images_out/
 
 # Prerequisites
 *.d

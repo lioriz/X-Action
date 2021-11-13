@@ -5,11 +5,25 @@ set(CMAKE_CXX_STANDARD 17)
 
 find_package(OpenCV REQUIRED)
 
-set(IMAGE_PATH ${CMAKE_SOURCE_DIR}/images)
-add_compile_definitions(IMAGE_PATH="${IMAGE_PATH}")
+set(IMAGE_PATH_IN ${CMAKE_SOURCE_DIR}/images)
+add_compile_definitions(IMAGE_PATH_IN="${IMAGE_PATH_IN}")
 
-include_directories(${OpenCV_INCLUDE_DIRS})
+set(IMAGE_PATH_OUT ${CMAKE_SOURCE_DIR}/images_out)
+add_compile_definitions(IMAGE_PATH_OUT="${IMAGE_PATH_OUT}")
+add_custom_target(make-dir-image-out ALL COMMAND ${CMAKE_COMMAND} -E make_directory ${IMAGE_PATH_OUT})
 
-add_executable(DisplayImage main.cpp)
+include_directories(${OpenCV_INCLUDE_DIRS}
+        include
+        )
 
-target_link_libraries(DisplayImage ${OpenCV_LIBS})
+add_executable(X-Action mainX-Action.cpp
+        src/imageActions.cpp
+        )
+
+target_link_libraries(X-Action ${OpenCV_LIBS}  -lstdc++fs)
+
+add_executable(PythonConversion mainPythonConversion.cpp
+        src/imageActions.cpp
+        )
+
+target_link_libraries(PythonConversion ${OpenCV_LIBS}  -lstdc++fs)

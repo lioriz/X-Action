@@ -2,11 +2,12 @@
 Manipulate images
 
 # Build instructions
-## Opencv brebuild
+## prebuild
 sudo apt update
 sudo apt --fix-broken install
 sudo apt install libgtk2.0-dev pkg-config
 sudo apt install libcanberra-gtk-module libcanberra-gtk3-module
+sudo apt install g++-8
 
 ## Opencv
 Follow the instructions: https://docs.opencv.org/4.x/d7/d9f/tutorial_linux_install.html
