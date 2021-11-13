@@ -27,3 +27,15 @@ Go to your 3rd party lib dir in your machine
   * make PythonConversion (for first assignment)
   * make X-Action (for x action assignment)
   * make (to build all)
+  
+## Run instructions
+### Run PythonConversion
+Go to build/bin
+run ./PythonConversion
+It will gow over the images in the images directory and show them in black&white
+
+### Run X-Action
+Go to build/bin
+run ./X-Action <num of threads> 
+num of threads should be from 1 to 10, any other number will result sungle thread run.
+the converted black&white images will be saved in images_out directory.

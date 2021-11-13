@@ -8,7 +8,6 @@ int main(int argc, char** argv)
 {
     try {
         imageActions actions(IMAGE_PATH_IN);
-
         int numOfThreads = 1;
 
         if(argc > 1) {
@@ -19,10 +18,9 @@ int main(int argc, char** argv)
         }
 
         std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
-
         actions.XActionLoop(numOfThreads);
+        std::chrono::steady_clock::time_point end   = std::chrono::steady_clock::now();
 
-        std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
         std::chrono::milliseconds time_span = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
         std::cout << "Operation took: " << time_span.count() << " milliseconds" << std::endl;
 
