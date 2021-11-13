@@ -1,38 +1,36 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
-#include <string>
-#include <filesystem>
+#include <thread>
+#include <vector>
 #include "imageActions.hpp"
 
-int main()
+int main(int argc, char** argv)
 {
     try {
         imageActions actions(IMAGE_PATH_IN);
 
-        std::string path;
-        while(actions.getImagePath(path)) {
-            std::cout << "Start cv::imread" << std::endl;
-            cv::Mat imgIn = cv::imread(path, 1);
-            if (imgIn.empty())
-            {
-                std::cout << "Failed imread(): image not found" << std::endl;
-                return -1;
-            }
+        auto XActionLoop = [&actions]() {
+            while(actions.XAction()){}
+        };
 
-            std::cout << "Start doSomething" << std::endl;
-            cv::Mat imgOut = actions.doSomething(imgIn);
-            if (imgOut.empty())
-            {
-                std::cout << "Failed image not found" << std::endl;
-                return -1;
-            }
+        int numOfThreads = 1;
 
-            std::cout << "Start saveImage" << std::endl;
-            if(!actions.saveImage(imgOut)) {
-                std::cout << "Fail to save " << path << std::endl;
+        if(argc > 1) {
+            int argNum = atoi(argv[1]);
+            if(argNum > 0 && argNum < 11) { // restraint for max 10 threads.
+                numOfThreads = argNum;
             }
         }
 
+        std::vector<std::thread> threadVec;
+        for(int i = 0 ; i < numOfThreads ; ++i) {
+            std::thread trd(XActionLoop);
+            threadVec.push_back(std::move(trd));
+        }
+
+        for(int i = 0 ; i < threadVec.size() ; ++i) {
+            threadVec[i].join();
+        }
     } catch(std::filesystem::filesystem_error& err) {
         std::cout << "caught " << err.what() << std::endl;
         return -1;

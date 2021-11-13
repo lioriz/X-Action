@@ -22,6 +22,8 @@ public:
 
     bool saveImage(const cv::Mat& imgIn);
 
+    bool XAction();
+
 private:
     std::mutex                                    mPathLock;
     std::filesystem::recursive_directory_iterator mDirItr;

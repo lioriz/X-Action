@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.18)
 project(X-Action)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 find_package(OpenCV REQUIRED)
 
@@ -20,7 +21,7 @@ add_executable(X-Action mainX-Action.cpp
         src/imageActions.cpp
         )
 
-target_link_libraries(X-Action ${OpenCV_LIBS}  -lstdc++fs)
+target_link_libraries(X-Action ${OpenCV_LIBS}  -lstdc++fs  pthread)
 
 add_executable(PythonConversion mainPythonConversion.cpp
         src/imageActions.cpp

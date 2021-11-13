@@ -40,3 +40,31 @@ bool imageActions::saveImage(const cv::Mat& img){
     std::string outPath(IMAGE_PATH_OUT + std::string("/image_") + std::to_string(++mSaveCount) + ".jpg");
     return cv::imwrite(outPath, img);
 }
+
+bool imageActions::XAction(){
+    std::string path;
+    if(getImagePath(path)) {
+        std::cout << "Start cv::imread" << std::endl;
+        cv::Mat imgIn = cv::imread(path, 1);
+        if (imgIn.empty()) {
+            std::cout << "Failed imread(): image not found" << std::endl;
+            return false;
+        }
+
+        std::cout << "Start doSomething" << std::endl;
+        cv::Mat imgOut = doSomething(imgIn);
+        if (imgOut.empty()) {
+            std::cout << "Failed image not found" << std::endl;
+            return false;
+        }
+
+        std::cout << "Start saveImage" << std::endl;
+        if (!saveImage(imgOut)) {
+            std::cout << "Fail to save " << path << std::endl;
+            return false;
+        }
+    } else {
+        return false;
+    }
+    return true;
+}
