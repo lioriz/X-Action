@@ -1,5 +1,5 @@
 # X-Action
-Convert 3D color RGB pics to 2D black & white pics
+Convert 3D color RGB pics to 2D black&white pics
 
 ## Build instructions
 ### prebuild
@@ -39,3 +39,13 @@ Go to build/bin
 run ./X-Action <num of threads> 
 num of threads should be from 1 to 10, any other number will result sungle thread run.
 the converted black&white images will be saved in images_out directory.
+
+## Docker
+Unfortuenetly I had some issues with the docker in my machine so I didn't have the time to build it completely, the project build, the X-Action is working but the PythonConversion causing segmentation fault.
+
+You can find the dockerfile in docker directory.
+I uploaded the image to docker-hub use "docker pull lioriz/image-converter:latest" to download the image.
+
+ * run the image with terminal. "docker run -it lioriz/image-converter:latest"
+ * go to X-Action. "cd imageConverter/X-Action/"
+ * run the exe files in build/bin.
